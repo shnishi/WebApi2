@@ -1,0 +1,66 @@
+<form (ngSubmit)="saveTask()" #taskForm="ngForm">
+
+    <div class="container">
+  
+      <div class="row">
+        <div class="form-group">
+        <label for="inputId" class="col-1" >Task ID</label>
+        <div class="col-3">
+          <input type="text" class="form-control col-1" [(ngModel)]="task.taskId" name="inputId" readonly>
+        </div>
+      </div>
+      </div>
+  
+      <div class="row">
+        <div class="form-group">
+        <label for="inputId" class="col-2">Title</label>
+        <div class="col-2">
+          <input type="text" class="form-control" [(ngModel)]="task.title" name="inputTitle" >
+        </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group">
+        <label for="inputUserId" class="col-2">User Id</label>
+        <div class="col-2">
+          <input type="text" class="form-control" [(ngModel)]="task.userId" name="inputUser" >
+        </div>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="form-group">
+        <label for="inputCreatedAt" class="col-2">Created at</label>
+        <div class="col-2">
+          <input type="date" class="form-control" value="{{ task.createdAt | date:'yyyy-MM-dd' }}" (ngModelChange)="task.createdAt = fDate($event)" name="inputCreatedAt" readonly>
+        </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="form-group">
+        <label for="inputIsActive" class="col-2">Is active?</label>
+        <div class="col-4">
+          <input type="text" class="form-control" [(ngModel)]="task.isActive" name="inputIsActive" #textField="ngModel"
+            minlength="6" required>
+        </div>
+      </div>
+      </div>
+  
+      <!-- Custom validations on exported ngModel (textField) -->
+      <div *ngIf="textField.invalid && (textField.dirty || textField.touched)" class="alert">
+        <div *ngIf="textField.errors?.['required']" class="alert alert-danger" role="alert">
+          Text is required.
+        </div>
+        <div *ngIf="textField.errors?.['minlength']" class="alert alert-danger" role="alert">
+          Text must be at least 10 characters long.
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <button type="submit" class="btn btn-primary" [disabled]="!taskForm.form.valid">Save</button>
+      </div>
+    </div>
+  </form>
